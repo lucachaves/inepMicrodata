@@ -3,6 +3,7 @@
 
 require 'sequel'
 require 'progress_bar'
+require 'nokogiri'
 
 @places = {
 	:"1442640" => "UNITED STATES DEPARTMENT OF AGRICULTURE, HOUMA (USDA)",
@@ -9511,11 +9512,18 @@ require 'progress_bar'
 }
 
 bar = ProgressBar.new(@places.size)
-DB = Sequel.sqlite('uniBrasil.db')
-DB.run "CREATE TABLE university (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL, status INTEGER NOT NULL)"
+# DB = Sequel.sqlite('uniBrasil.db')
+DB = Sequel.connect('mysql://root:luiz123@localhost/uniBrasil')
+DB.run "CREATE TABLE university (id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, status INTEGER NOT NULL, city VARCHAR(255) NOT NULL)"
 dataset = DB[:university]
+
 
 @places.each{|code, place|
 	bar.increment!
-	dataset.insert(:id=> code.to_s.to_i, :name => place, :status => 0)
+	dataset.insert(
+		:id=> code.to_s.to_i, 
+		:name => Nokogiri::HTML.parse(place).text, #decode html entity
+		:status => 0,
+		:city => ''
+	)
 }
