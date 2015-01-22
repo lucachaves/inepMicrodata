@@ -25,14 +25,14 @@ result.each{|curso|
 			where(id: id).
 			update(no_municipio_curso_ascii: city.downcase)
 
-	# # get cidade and uf, then search latlon from mc-munic
-	# munic = munics.where(nome: curso[:no_municipio_curso], uf: curso[:sgl_uf_curso])
-	# if munic.count > 0
-	# 	# insert latlon
-	# 	cursos.
-	# 		where(id: id).
-	# 		update(latitude: munic.all[0][:latitude].to_f, longitude: munic.all[0][:longitude].to_f)
-	# end
+	# get cidade and uf, then search latlon from mc-munic
+	munic = munics.where(nome: curso[:no_municipio_curso], uf: curso[:sgl_uf_curso])
+	if munic.count > 0
+		# insert latlon
+		cursos.
+			where(id: id).
+			update(latitude: munic.all[0][:latitude].to_f, longitude: munic.all[0][:longitude].to_f)
+	end
 
 	bar.increment!
 }

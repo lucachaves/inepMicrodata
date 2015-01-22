@@ -1,11 +1,7 @@
-# consultar por '%%%'
+# consultar por universidade feita por '%%%'
 # curl 'https://sucupira.capes.gov.br/sucupira/public/consultas/coleta/dadosCadastrais/dadosCadastraisPublico.jsf' -H 'Cookie: JSESSIONID=ED2hMdRY3t0yQ272jr10FoVk.sucupira-75; SERVERID=srv_sucupira_75; __utma=210825607.1281661692.1418299759.1418329128.1421621581.4; __utmc=210825607; __utmz=210825607.1421621581.4.4.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); _gat=1; _ga=GA1.3.1281661692.1418299759' -H 'Origin: https://sucupira.capes.gov.br' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4' -H 'Faces-Request: partial/ajax' -H 'Content-type: application/x-www-form-urlencoded;charset=UTF-8' -H 'Accept: */*' -H 'Referer: https://sucupira.capes.gov.br/sucupira/public/consultas/coleta/dadosCadastrais/dadosCadastraisPublico.jsf' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36' -H 'Connection: keep-alive' --data 'form=form&form%3Aj_idt46%3Ainst%3AvalueId=&form%3Aj_idt46%3Ainst%3Ainput=%25%25%25&javax.faces.ViewState=8594034872531715696%3A5760389218298302459&javax.faces.source=form%3Aj_idt46%3Ainst%3Ainput&javax.faces.partial.event=keyup&javax.faces.partial.execute=form%3Aj_idt46%3Ainst%3Ainput%20form%3Aj_idt46%3Ainst%3Ainput&javax.faces.partial.render=form%3Aj_idt46%3Ainst%3Alistbox&x=334.203125&y=443.1875&AJAX%3AEVENTS_COUNT=1&javax.faces.partial.ajax=true' --compressed
 
-require 'sequel'
-require 'progress_bar'
-require 'nokogiri'
-
-@places = {
+@universities = {
 	:"1442640" => "UNITED STATES DEPARTMENT OF AGRICULTURE, HOUMA (USDA)",
 	:"1124622" => "A. T. STILL UNIVERSITY OF HEALTH SCIENCES",
 	:"1131758" => "AALBORG UNIVERSITET, AALBORG (AAU)",
@@ -2454,7 +2450,8 @@ require 'nokogiri'
 	:"4094" => "33229015 FACULDADE ANHANG&Uuml;ERA DE PIRACICABA (U.ANH.PIR)",
 	:"4271" => "33235015 FACULDADE ANHANG&Uuml;ERA DE RIBEIR&Atilde;O PRETO (U.ANH.RIB)",
 	:"4517" => "50013017 FACULDADE ANHANGUERA DE RONDON&Oacute;POLIS (F.ANH.R.)",
-	:"3937" => "33222010 FACULDADE ANHANGUERA DE SANTA B&Aacute;RBARA",
+	:"3937" => "33222010 FACULDADE ANHANGUERA DE SANTA B&Aacute;RBARA (U.ANH.SB)",
+	# :"3937" => "33222010 FACULDADE ANHANGUERA DE SANTA B&Aacute;RBARA",
 	:"2511" => "33179018 FACULDADE ANHANGUERA DE TABO&Atilde;O DA SERRA (FATS)",
 	:"3938" => "33223017 FACULDADE ANHANGUERA DE TAUBAT&Eacute; (U.ANH.TAU)",
 	:"2685" => "28047010 FACULDADE AN&Iacute;SIO TEIXEIRA DE FEIRA DE SANTANA (FAT)",
@@ -3147,7 +3144,8 @@ require 'nokogiri'
 	:"5121" => "30007011 FUNDA&Ccedil;&Atilde;O INSTITUTO CAPIXABA DE PESQ.EM CONT.ECON.E FINAN&Ccedil;AS (FUCAPE)",
 	:"5123" => "33088012 FUNDA&Ccedil;&Atilde;O INSTITUTO DE PESQUISAS ECON&Ocirc;MICAS (FIPE)",
 	:"5124" => "33154015 FUNDA&Ccedil;&Atilde;O INSTITUTO POLO AVAN&Ccedil;ADO DA SA&Uacute;DE DE RIBEIR&Atilde;O PRETO (FIPASE)",
-	:"5125" => "32049013 FUNDA&Ccedil;&Atilde;O JO&Atilde;O PINHEIRO (ESCOLA DE GOVERNO) (FJP)",
+	:"5125" => "32049013 FUNDA&Ccedil;&Atilde;O JO&Atilde;O PINHEIRO (FJP)",
+	# :"5125" => "32049013 FUNDA&Ccedil;&Atilde;O JO&Atilde;O PINHEIRO (ESCOLA DE GOVERNO) (FJP)",
 	:"5126" => "25016016 FUNDACAO JOAQUIM NABUCO (FJN)",
 	:"5127" => "32031017 FUNDA&Ccedil;&Atilde;O MINEIRA DE ARTE (FUNMA)",
 	:"668093" => "33257019 FUNDA&Ccedil;&Atilde;O MUNICIPAL DE ENSINO SUPERIOR DE BRAGAN&Ccedil;A PAULISTA (FESB)",
@@ -3186,7 +3184,8 @@ require 'nokogiri'
 	:"1136443" => "FUNDACI&Oacute;N PARA INVESTIGACIONES BIOL&Oacute;GICAS APLICADAS (FIBA)",
 	:"801142" => "Fundaci&oacute;n P&uacute;blica Galega de Medicina Xen&oacute;mica (FPGMX)",
 	:"2001308" => "FUNDACI&Oacute;N SOCIOSANITARIA DE CASTILLA",
-	:"5145" => "33150010 FUNDO DE DEFESA DA CITRICULTURA (FUNDECITRUS) (FUNDECITRU)",
+	:"5145" => "33150010 FUNDO DE DEFESA DA CITRICULTURA (FUNDECITRUS)",
+	# :"5145" => "33150010 FUNDO DE DEFESA DA CITRICULTURA (FUNDECITRUS) (FUNDECITRU)",
 	:"855875" => "FURMAN UNIVERSITY",
 	:"1126821" => "FUTURE GENERATIONS GRADUATE SCHOOL",
 	:"1349667" => "FUZHOU UNIVERSITY (FZU)",
@@ -9509,21 +9508,4 @@ require 'nokogiri'
 	:"1993038" => "ZOOLOGISCHE STAATSSAMMLUNG M&Uuml;NCHEN (ZSM)",
 	:"872661" => "ZOOLOGISCHES FORSCHUNGSMUSEUM ALEXANDER KOENIG (ZFMK)",
 	:"1437676" => "ZOOLOGISK MUSEUM"
-}
-
-bar = ProgressBar.new(@places.size)
-# DB = Sequel.sqlite('uniBrasil.db')
-DB = Sequel.connect('mysql://root:luiz123@localhost/uniBrasil')
-DB.run "CREATE TABLE university (id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, status INTEGER NOT NULL, city VARCHAR(255) NOT NULL)"
-dataset = DB[:university]
-
-
-@places.each{|code, place|
-	bar.increment!
-	dataset.insert(
-		:id=> code.to_s.to_i, 
-		:name => Nokogiri::HTML.parse(place).text, #decode html entity
-		:status => 0,
-		:city => ''
-	)
 }
